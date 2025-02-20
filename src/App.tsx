@@ -37,20 +37,14 @@ function getTransportConfigs(
 export default function Layout() {
   const projectAccessKey = import.meta.env.VITE_PROJECT_ACCESS_KEY;
   const waasConfigKey = import.meta.env.VITE_WAAS_CONFIG_KEY;
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const appleClientId = import.meta.env.VITE_APPLE_CLIENT_ID;
-  const appleRedirectURI = window.location.origin + window.location.pathname;
-  const walletConnectId = import.meta.env.VITE_WALLET_CONNECT_ID;
 
   const connectors = getDefaultWaasConnectors({
-    walletConnectProjectId: walletConnectId,
     waasConfigKey,
-    googleClientId,
-    // Notice: Apple Login only works if deployed on https (to support Apple redirects)
-    appleClientId,
-    appleRedirectURI,
+    google: false,
+    apple: false,
+    walletConnect: false,
     defaultChainId,
-    appName: "Kit Starter",
+    appName: "Party Barrage",
     projectAccessKey,
   });
 
@@ -86,13 +80,14 @@ function App() {
 
   return (
     <SequenceBoilerplate
-      githubUrl="https://github.com/0xsequence-demos/primary-sale-1155-boilerplate/"
-      name="Primary Sale 1155 Boilerplate"
-      description="Example of how to perform primary sales of 1155 NFTs using Sequence."
-      docsUrl="https://docs.sequence.xyz/"
+      githubUrl="https://github.com/babanini95/barrage-erc1155-primary-sales"
+      name="Barrage ERC1155 Primary Sales"
+      description="Perform primary sales of 1155 NFTs using Sequence."
       wagmi={{ useAccount, useDisconnect, useSwitchChain }}
-      faucetUrl="https://faucet.circle.com/"
-      balance={balance ? `$${balance}` : false}
+      faucetUrl="https://party-barrage-sample.vercel.app/"
+      balance={balance ? `${balance}` : false}
+      docsUrl="https://sequence.xyz/"
+
     >
       {isConnected ? <Connected /> : <NotConnected />}
     </SequenceBoilerplate>

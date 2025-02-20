@@ -2,6 +2,7 @@ import { useReadContract } from "wagmi";
 
 import { useContractInfo } from "../hooks/data";
 import { SALES_CONTRACT_ABI } from "../config/sales/salesContractAbi";
+import { erc20Abi } from "viem";
 import { UnpackedSaleConfigurationProps } from "~/helpers";
 
 export const useSalesCurrency = (
@@ -15,7 +16,15 @@ export const useSalesCurrency = (
       address: saleConfiguration.salesContractAddress,
     });
 
+  const { data: paymentTokenSymbolData } = useReadContract({
+    abi: erc20Abi,
+    functionName: "symbol",
+    chainId: saleConfiguration.chainId,
+    address: saleConfiguration.nftTokenAddress,
+  })
+
   const paymentTokenAddress = (paymentTokenData as string) || "";
+  const paymentTokenSymbol = (paymentTokenSymbolData as string) || "";
 
   const {
     data: currencyContractInfoData,
@@ -25,5 +34,6 @@ export const useSalesCurrency = (
   return {
     data: currencyContractInfoData,
     isLoading: paymentTokenIsLoading || currencyContractInfoIsLoading,
+    symbol: paymentTokenSymbol,
   };
 };
