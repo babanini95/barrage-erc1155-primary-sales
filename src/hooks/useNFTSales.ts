@@ -8,13 +8,14 @@ import { calculateMintedPercentage, getSaleConfiguration } from "~/helpers";
 
 // UI - Library
 
-interface GlobalSalesDetailsData {
+interface SalesDetailsData {
   cost: bigint;
   endtime: bigint;
   merkleRoot: string;
   startTime: bigint;
   supplyCap: bigint;
 }
+
 
 export function useNFTSales({ chainId }: { chainId?: number }) {
   // Setup the sale configuration based on the chainId
@@ -27,9 +28,9 @@ export function useNFTSales({ chainId }: { chainId?: number }) {
 
   // Fetch the currency data
 
-  // Fetch the token sale details data
+  // Fetch the global sale details data
   const {
-    data: tokenSaleDetailsData,
+    data: globalSaleDetailsData,
     // isLoading: tokenSaleDetailsDataIsLoading,
   } = useReadContract({
     abi: SALES_CONTRACT_ABI,
@@ -47,7 +48,7 @@ export function useNFTSales({ chainId }: { chainId?: number }) {
   });
 
   const totalSupply =
-    (tokenSaleDetailsData as GlobalSalesDetailsData)?.supplyCap?.toString() ||
+    (globalSaleDetailsData as SalesDetailsData)?.supplyCap?.toString() ||
     0;
 
   const totalMintedNftsPercentage = calculateMintedPercentage(
