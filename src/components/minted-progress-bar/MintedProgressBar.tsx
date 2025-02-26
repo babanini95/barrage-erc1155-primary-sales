@@ -4,6 +4,8 @@ interface MintedProgressBarProps {
   supplyValue: number;
   totalMintedPercentage?: number;
   showTotalMintedPercentage?: boolean;
+  tokenId?: number;
+  showtokenId?: boolean;
 }
 
 export const MintedProgressBar = ({
@@ -12,10 +14,15 @@ export const MintedProgressBar = ({
   supplyValue,
   totalMintedPercentage,
   showTotalMintedPercentage = false,
+  tokenId,
+  showtokenId = false,
 }: MintedProgressBarProps) => {
   return (
-    <div className="flex flex-col gap-1 ">
+    <div className="flex flex-col gap-1 " style={{ marginBottom: "1rem" }}>
       <div className="flex justify-between">
+        {showtokenId ? (
+          <span className="text-12 font-medium">Token ID: {tokenId} </span>
+        ) : null}
         <span className="text-12 font-medium">
           {mintedValue}/{supplyValue} Minted
         </span>

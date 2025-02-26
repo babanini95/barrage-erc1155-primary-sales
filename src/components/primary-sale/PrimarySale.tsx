@@ -8,9 +8,12 @@ type Collection = {
 };
 
 type MintingDetails = {
-  percentage: number;
-  value: number;
-  total: number;
+  totalMintedPercentage: number;
+  totalNftMinted: number;
+  totalNftSupply: number;
+  totalMintedPercentagePerId: number[] | undefined;
+  totalNftMintedPerId: number[] | undefined;
+  totalNftSupplyPerId: number[] | undefined;
 };
 
 type PrimarySaleProps = {
@@ -36,12 +39,29 @@ export function PrimarySale({ collection, minting }: PrimarySaleProps) {
           ) : null}
         </div>
         <div className="mt-auto mb-0 w-full pt-4">
-          <MintedProgressBar
-            mintedPercentage={minting.percentage}
-            mintedValue={minting.value}
-            supplyValue={minting.total}
+          {/* <MintedProgressBar
+            mintedPercentage={minting.totalMintedPercentage}
+            mintedValue={minting.totalNftMinted}
+            supplyValue={minting.totalNftSupply}
             showTotalMintedPercentage
-          />
+          /> */}
+          <>
+            {
+              minting.totalMintedPercentagePerId ? (
+                minting.totalMintedPercentagePerId.map((mintedPercentage, index) => (
+                  <MintedProgressBar
+                    key={index}
+                    mintedPercentage={mintedPercentage}
+                    mintedValue={minting.totalNftMintedPerId ? minting.totalNftMintedPerId[index] : 0}
+                    supplyValue={minting.totalNftSupplyPerId ? minting.totalNftSupplyPerId[index] : 0}
+                    showTotalMintedPercentage
+                    tokenId={index}
+                    showtokenId={true}
+                  />
+                ))
+              ) : null
+            }
+          </>
         </div>
       </div>
     </div>
